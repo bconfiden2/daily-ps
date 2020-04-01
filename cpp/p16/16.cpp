@@ -23,7 +23,7 @@ int main(void)
     cin >> x1 >> y1 >> x2 >> y2;
     cin >> ax >> ay;
 
-    //면을 9개로 나눈다
+    //면을 9개로 나눈다!
     /*   1 | 2 | 3
         -----------
          4 | 5 | 6
@@ -39,7 +39,7 @@ int main(void)
       }
       else if(ay > y2) // 1
       {
-        
+
       }
       else // 4
       {
