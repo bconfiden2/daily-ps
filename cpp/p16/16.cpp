@@ -10,6 +10,9 @@
 #include <iostream>
 using namespace std;
 
+int pow(int);
+void PrintAnswer(int, int, int, int);
+
 int main(void)
 {
   int testCases = 0;
@@ -35,41 +38,41 @@ int main(void)
     {
       if(ay < y1) // 7
       {
-
+        PrintAnswer(ax, ay, x1, y1);
       }
       else if(ay > y2) // 1
       {
-
+        PrintAnswer(ax, ay, x1, y2);
       }
       else // 4
       {
-        cout << (x1-ax) * (x1-ax) << " " << x1 - ax;
+        PrintAnswer(ax, ay, x1, ay);
       }
     }
     else if(ax > x2) // 3,6,9
     {
       if(ay < y1) // 9
       {
-
+        PrintAnswer(ax, ay, x2, y1);
       }
       else if(ay > y2) // 3
       {
-
+        PrintAnswer(ax, ay, x2, y2);
       }
       else // 6
       {
-        cout << (ax-x2) * (ax-x2) << " " << ax - x2;
+        PrintAnswer(ax, ay, x2, ay);
       }
     }
     else // 2,5,8
     {
       if(ay < y1) // 8
       {
-        cout << (y1-ay) * (y1-ay) << " " << y1 - ay;
+        PrintAnswer(ax, ay, ax, y1);
       }
       else if(ay > y2) // 2
       {
-        cout << (ay-y2) * (ay-y2) << " " << ay - y2;
+        PrintAnswer(ax, ay, ax, y2);
       }
       else // 5
       {
@@ -81,4 +84,26 @@ int main(void)
   }
 
   return 0;
+}
+
+int pow(int a)
+{
+  return a * a;
+}
+
+int abs(int a)
+{
+  if(a >= 0)
+  {
+    return a;
+  }
+  else
+  {
+    return -1 * a;
+  }
+}
+
+void PrintAnswer(int px, int py, int bx, int by)
+{
+  cout << pow(px - bx) + pow(py - by) << " " << abs(px - bx) + abs(py - by);
 }
