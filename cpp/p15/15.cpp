@@ -1,6 +1,6 @@
 /*************************************************************
 *                                                            *
-*  Problem :                                                 *
+*  Problem : 삼각형의 종류
 *                                                            *
 **************************************************************
 *                                                            *
@@ -11,7 +11,8 @@
 #include <cmath>
 using namespace std;
 
-double CalculateLength(int, int, int, int);
+int CalculateLength(int, int, int, int);
+int power(int, int);
 
 int main(void)
 {
@@ -23,11 +24,11 @@ int main(void)
     int ax, ay, bx, by, cx, cy;
     cin >> ax >> ay >> bx >> by >> cx >> cy;
 
-    //세 변의 길이를 잰다
-    double a = CalculateLength(ax, ay, bx, by);
-    double b = CalculateLength(bx, by, cx, cy);
-    double c = CalculateLength(ax, ay, cx, cy);
-    double temp = 0.0;
+    //세 변의 길이를 잰다 (제곱)
+    int a = CalculateLength(ax, ay, bx, by);
+    int b = CalculateLength(bx, by, cx, cy);
+    int c = CalculateLength(ax, ay, cx, cy);
+    int temp = 0;
 
     //가장 긴 변을 c에다가 넣어준다
     if(a >= b)
@@ -50,20 +51,20 @@ int main(void)
     }
 
     //삼각형 기본 조건
-    if(a + b <= c)
+    if(sqrt(a) + sqrt(b) <= sqrt(c))
     {
       cout << 0 << endl;
     }
     //예각, 둔각, 직각 인지 판별
-    else if(pow(a, 2) + pow(b, 2) == pow(c, 2))
+    else if(a + b == c)
     {
       cout << 1 << endl;
     }
-    else if(pow(a, 2) + pow(b, 2) < pow(c,2))
+    else if(a + b < c)
     {
       cout << 2 << endl;
     }
-    else
+    else if(a + b > c)
     {
       cout << 3 << endl;
     }
@@ -72,9 +73,19 @@ int main(void)
   return 0;
 }
 
-double CalculateLength(int x1, int y1, int x2, int y2)
+int CalculateLength(int x1, int y1, int x2, int y2)
 {
-  double length = 0;
-  length = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+  int length = 0;
+  length = power(x2 - x1, 2) + power(y2 - y1, 2);
   return length;
+}
+
+int power(int a, int b)
+{
+  int result = 1;
+  for(int i = 0 ; i < b ; i++)
+  {
+    result *= a;
+  }
+  return result;
 }

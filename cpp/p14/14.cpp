@@ -1,6 +1,6 @@
 /*************************************************************
 *                                                            *
-*  Problem :                                                 *
+*  Problem : 삼각형의 종류
 *                                                            *
 **************************************************************
 *                                                            *
@@ -34,20 +34,17 @@ void CheckTriangle(int a, int b, int c)
   {
     cout << 0 << endl;
   }
+  else if(a == b && b == c)
+  {
+    cout << 1 << endl;
+  }
   else if(a*a + b*b == c*c)
   {
     cout << 2 << endl;
   }
-  else if(a == b)
+  else if(a == b || b == c || c == a)
   {
-    if(b == c)
-    {
-      cout << 1 << endl;
-    }
-    else
-    {
-      cout << 3 << endl;
-    }
+    cout << 3 << endl;
   }
   else
   {
