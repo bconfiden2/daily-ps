@@ -1,6 +1,8 @@
 #include <iostream>
 using namespace std;
 
+
+
 struct Integer
 {
   int data;
@@ -61,11 +63,26 @@ int main(void)
     }
 
     int* sortedIntegers = (int*)malloc(sizeof(int) * howManyNum);
+    int curIdx = 0;
     for(int i = 0 ; i < integerNum ; i++)
     {
       if(integers[i].freq == curFrequentCount)
       {
-        howManyNum++;
+        sortedIntegers[curIdx++] = integers[i].data;
+      }
+    }
+
+    int forSort = sortedIntegers[0];
+    for(int i = 0 ; i < howManyNum ; i++)
+    {
+      for(int j = i ; j < howManyNum ; j++)
+      {
+        if(sortedIntegers[j] < sortedIntegers[i])
+        {
+          int temp = sortedIntegers[j];
+          sortedIntegers[j] = sortedIntegers[i];
+          sortedIntegers[i] = temp;
+        }
       }
     }
 
