@@ -1,0 +1,10 @@
+a = int(input())
+b = int(input())
+
+digit1 = a * (b % 10)
+digit10 = a * (b // 10 % 10)
+digit100 = a * (b // 100)
+print(digit1)
+print(digit10)
+print(digit100)
+print(digit1 + digit10 * 10 + digit100 * 100)
