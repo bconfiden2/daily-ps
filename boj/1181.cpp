@@ -34,36 +34,7 @@ int main(void)
   }
 
   sort(v.begin(), v.end(),compare);
-/*
-  for(int i = 0 ; i < n ; i++)
-  {
-    for(int j = i + 1 ; j < n ; j++)
-    {
-      if(!words[j].length())
-      {
-        continue;
-      }
-      if(words[i].length() > words[j].length())
-      {
-        //cout << words[i] << "," << i << " <-> " << words[j] << "," << j << endl;
-        swap(words[i], words[j]);
-      }
-      else if(words[i].length() == words[j].length())
-      {
-          if(words[i].compare(words[j]) > 0)
-          {
-            //cout << words[i] << "," << i << " <-> " << words[j] << "," << j << endl;
-            swap(words[i], words[j]);
-          }
-          else if(words[i].compare(words[j]) == 0)
-          {
-            //cout << words[j] << "," << j << "clear" << endl;
-            words[j].clear();
-          }
-      }
-    }
-  }
-*/
+
   for(int i = 0 ; i < v.size() ; i++)
   {
     printf("%s\n", v[i].c_str());
