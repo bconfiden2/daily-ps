@@ -152,6 +152,8 @@ bool MyISBN::isCheckSumValid()
     count++;
   }
 
+  std::cout << sum << " " << count << std::endl;
+
   // count 가 체크썸 값이 됨
 
   // count 가 10일 땐 입력받았던 체크썸이 X 라면 트루
