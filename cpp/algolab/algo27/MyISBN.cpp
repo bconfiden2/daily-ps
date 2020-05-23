@@ -46,7 +46,7 @@ bool MyISBN::isSyntaxValid()
   }
   // 만약 국가번호에 아무것도 없었으면 거짓
   if(countryLength == 0) return false;
-  // 국가번호 담는 문자열에 마지막은 널값
+  // 국가번호 담는 문자열 마지막은 널값
   country[countryLength] = '\0';
   // '-' 제외시키기 위해 인덱스 1 증가
   i++;
@@ -55,7 +55,6 @@ bool MyISBN::isSyntaxValid()
   int publisherLength = 0;
   while(isbn[i] != '-')
   {
-    //std::cout << i << std::endl;
     if(publisherLength >= 7) return false;
 
     if(isbn[i] < 48 || isbn[i] > 57) return false;
@@ -73,7 +72,6 @@ bool MyISBN::isSyntaxValid()
   int bookLength = 0;
   while(isbn[i] != '-')
   {
-    //std::cout << i << std::endl;
     if(bookLength >= 6) return false;
 
     if(isbn[i] < 48 || isbn[i] > 57) return false;
@@ -108,6 +106,8 @@ bool MyISBN::isSyntaxValid()
   // 정상적인 ISBN 번호라면 @@@ - @@@ - @@@ - @ 형식으로 나올 것이기 떄문에
   // 만약 체크썸 다음에 입력된 값이 있으면 거짓
   if(isbn[i] != '\0') return false;
+
+  if(countryLength + publisherLength + bookLength != 9) return false;
 
   // 모두 무사통과시 참
   return true;
@@ -151,8 +151,6 @@ bool MyISBN::isCheckSumValid()
   {
     count++;
   }
-
-  std::cout << sum << " " << count << std::endl;
 
   // count 가 체크썸 값이 됨
 

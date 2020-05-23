@@ -13,10 +13,10 @@ public:
   bool isCorrectNumber();
 private:
   char isbn[max_length+11];
-  char country[5 + 1];
-  char publisher[7 + 1];
-  char book[6 + 1];
-  char checkSum;
+  char country[5 + 1] = {'\0',};
+  char publisher[7 + 1] = {'\0',};
+  char book[6 + 1] = {'\0', };
+  char checkSum = '\0';
   bool isSyntaxValid();
   bool isCheckSumValid();
 };
