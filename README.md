@@ -3,6 +3,7 @@
 
 # boj
   - 백준 문제 풀이
+  https://www.acmicpc.net/user/bconfiden2
   - steady    - 1일 1문제 / solved.ac 현재 등급
   - challenge - 1주 1문제 / solved.ac 다음 등급
 
