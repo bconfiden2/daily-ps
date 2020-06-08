@@ -13,9 +13,9 @@ public:
 
   // copy constructor
   myPolynomial(const myPolynomial &poly);
-  myPolynomial(int deg, list<myTerm> list);
+  myPolynomial(int deg, list<myTerm> temp);
 
-  // overloaded operators실습 문제
+  // overloaded operators
   bool operator==(myPolynomial poly);
   bool operator!=(myPolynomial poly);
   myPolynomial& operator+=(myPolynomial poly);
@@ -28,6 +28,7 @@ public:
   myPolynomial operator+(myPolynomial poly);
   myPolynomial operator-(myPolynomial poly);
   myPolynomial operator*(myPolynomial poly);
+  myPolynomial operator*(myTerm term);
 
   long operator()(int x); // evaluate the polynomial
   int getDegree() const;         // get a degree of the polynomial

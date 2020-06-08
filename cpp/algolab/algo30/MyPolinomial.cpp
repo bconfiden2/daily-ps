@@ -6,12 +6,12 @@ bool cmp(pair<int, int> a, pair<int, int> b)
 {
   return a.second > b.second;
 }
-
-bool cmp2(myTerm a, myTerm b)
+/*
+bool cmp2(const myTerm a, const myTerm b)
 {
-  return a.getExp() > b.getExp();
+  return a < b;
 }
-
+*/
 myPolynomial myPolynomial::ZERO(0, (unsigned)0);              // the zero polynomial P(x) = 0
 myPolynomial myPolynomial::ONE(1, (unsigned)0);  // the monomial P(x) = 1
 myPolynomial myPolynomial::X(1, (unsigned)1);             // the monomial P(x) = x
@@ -53,7 +53,7 @@ myPolynomial::myPolynomial(const myPolynomial& poly) : degree(poly.degree), sen(
   */
 }
 
-myPolynomial::myPolynomial(int deg, list<myTerm> list) : degree(deg), sen(list)
+myPolynomial::myPolynomial(int deg, list<myTerm> temp) : degree(deg), sen(temp)
 {
   
 }
@@ -84,9 +84,10 @@ myPolynomial myPolynomial::operator-()
   myPolynomial temp(*this);
 
   list<myTerm>::iterator iter = temp.sen.begin();
-  for(int i = 0 ; i < temp.sen.size() ; i++, iter++)
+  list<myTerm>::iterator iter2 = sen.begin();
+  for(int i = 0 ; i < temp.sen.size() ; i++, iter++, iter2++)
   {
-    *(iter) = -*(iter);
+    *iter = -(*iter2);
   }
 
   return temp;
@@ -94,27 +95,132 @@ myPolynomial myPolynomial::operator-()
 
 myPolynomial& myPolynomial::operator+=(myPolynomial poly)
 {
+  list<myTerm>::iterator iter = poly.sen.begin();
+
+  for(int i = 0 ; i < poly.sen.size() ; i++, iter++)
+  {
+    int j = 0;
+    list<myTerm>::iterator iter2 = sen.begin();
+    for(j = 0 ; j < sen.size() ; j++, iter2++)
+    {
+      if((*iter).getExp() == (*iter2).getExp())
+      {
+        (*iter2).setCoeff((*iter).getCoeff() + (*iter2).getCoeff());
+        //sen.push_back(myTerm((*iter).getCoeff() + (*iter2).getCoeff(), (*iter).getExp()));
+        break;
+      }
+    }
+    if(j == sen.size())
+    {
+      iter2 = sen.begin();
+      for(int k = 0 ; k < sen.size() ; k++, iter2++)
+      {
+        if((*iter2).getExp() < (*iter).getExp())
+        {
+          sen.insert(iter2, *iter);
+          break;
+          //sen.push_back(myTerm((*iter).getCoeff(), (*iter).getExp()));
+        }
+      }
+    }
+    
+  }
+  //sort(sen.begin(), sen.end(), cmp2);
+
+  degree = sen.front().getExp();
   return (*this);
 }
 
 myPolynomial& myPolynomial::operator-=(myPolynomial poly)
 {
+  list<myTerm>::iterator iter = poly.sen.begin();
+
+  for(int i = 0 ; i < poly.sen.size() ; i++, iter++)
+  {
+    int j = 0;
+    list<myTerm>::iterator iter2 = sen.begin();
+    for(j = 0 ; j < sen.size() ; j++, iter2++)
+    {
+      if((*iter).getExp() == (*iter2).getExp())
+      {
+        (*iter2).setCoeff((*iter).getCoeff() - (*iter2).getCoeff());
+        //sen.push_back(myTerm((*iter).getCoeff() + (*iter2).getCoeff(), (*iter).getExp()));
+        break;
+      }
+    }
+    if(j == sen.size())
+    {
+      iter2 = sen.begin();
+      for(int k = 0 ; k < sen.size() ; k++, iter2++)
+      {
+        if((*iter2).getExp() < (*iter).getExp())
+        {
+          sen.insert(iter2, *iter);
+          break;
+          //sen.push_back(myTerm((*iter).getCoeff(), (*iter).getExp()));
+        }
+      }
+    }
+    //if(j == sen.size())
+    //{
+    //  sen.push_back(myTerm(-(*iter).getCoeff(), (*iter).getExp()));
+    //}
+    
+  }
+  //sort(sen.begin(), sen.end(), cmp2);
+
+  degree = sen.front().getExp();
+
   return (*this);
+}
+
+myPolynomial myPolynomial::operator*(myTerm term)
+{
+  myPolynomial temp(*this);
+
+  list<myTerm>::iterator iter = temp.sen.begin();
+
+  for(int i = 0 ; i < temp.sen.size() ; i++, iter++)
+  {
+    (*iter).setCoeff((*iter).getCoeff() * term.getCoeff());
+    (*iter).setExp((*iter).getExp() + term.getExp());
+  }
+
+  return temp;
 }
 
 myPolynomial& myPolynomial::operator*=(myPolynomial poly)
 {
+  myPolynomial res(*this);
+
+  sen.clear();
+
+  list<myTerm>::iterator iter = poly.sen.begin();
+  for(int i = 0 ; i < poly.sen.size() ; i++, iter++)
+  {
+    (*this) += res * (*iter);
+  }
+
   return (*this);
 }
 
 myPolynomial& myPolynomial::operator*=(int k)
 {
+  list<myTerm>::iterator iter = sen.begin();
+  
+  for(int i = 0 ; i < sen.size() ; i++, iter++)
+  {
+    (*iter).setCoeff((*iter).getCoeff() * k);
+  }
+
   return (*this);
 }
 
 myPolynomial myPolynomial::operator*(int k)
 {
-  myPolynomial a(0);
+  myPolynomial a(*this);
+
+  a *= k;
 
   return a;
 }
@@ -122,9 +228,13 @@ myPolynomial myPolynomial::operator*(int k)
 // friend operators and functions
 myPolynomial operator*(int k, myPolynomial poly)
 {
-  myPolynomial a(0);
+  return poly * k;
+}
 
-  return a;
+myPolynomial myPolynomial::operator*(myPolynomial poly)
+{
+  poly *= (*this);
+  return poly;
 }
 
 myPolynomial myPolynomial::ddx()
@@ -137,7 +247,7 @@ myPolynomial myPolynomial::ddx()
     temp.push_back((*iter).ddx()); 
   }
 
-  myPolynomial a(0);
+  myPolynomial a(degree-1, temp);
 
   return a;
 }
@@ -161,11 +271,24 @@ myPolynomial myPolynomial::operator+(myPolynomial poly)
     }
     if(j == sen.size())
     {
-      temp.push_back(myTerm((*iter).getCoeff(), (*iter).getExp()));
+      iter2 = sen.begin();
+      for(int k = 0 ; k < sen.size() ; k++, iter2++)
+      {
+        if((*iter2).getExp() < (*iter).getExp())
+        {
+          sen.insert(iter2, *iter);
+          break;
+          //sen.push_back(myTerm((*iter).getCoeff(), (*iter).getExp()));
+        }
+      }
     }
+    //if(j == sen.size())
+    //{
+    //  temp.push_back(myTerm((*iter).getCoeff(), (*iter).getExp()));
+    //}
     
   }
-  sort(temp.begin(), temp.end(), cmp2);
+  //sort(temp.begin(), temp.end(), cmp2);
 
   int deg = temp.front().getExp();
   myPolynomial a(deg, temp);
@@ -191,22 +314,28 @@ myPolynomial myPolynomial::operator-(myPolynomial poly)
     }
     if(j == sen.size())
     {
-      temp.push_back(myTerm(-(*iter).getCoeff(), (*iter).getExp()));
+      iter2 = sen.begin();
+      for(int k = 0 ; k < sen.size() ; k++, iter2++)
+      {
+        if((*iter2).getExp() < (*iter).getExp())
+        {
+          sen.insert(iter2, *iter);
+          break;
+          //sen.push_back(myTerm((*iter).getCoeff(), (*iter).getExp()));
+        }
+      }
     }
+    //if(j == sen.size())
+    //{
+    //  temp.push_back(myTerm(-(*iter).getCoeff(), (*iter).getExp()));
+    //}
     
   }
-  sort(temp.begin(), temp.end(), cmp2);
+  //sort(temp.begin(), temp.end(), cmp2);
 
   int deg = temp.size();
   myPolynomial a(deg, temp);
   return a;
-}
-
-myPolynomial myPolynomial::operator*(myPolynomial poly)
-{
-  myPolynomial a(0);
-
-  return poly;
 }
 
 long myPolynomial::operator()(int x)
@@ -244,6 +373,10 @@ ostream& operator<<(ostream& outStream, myPolynomial poly)
   for(int i = 0 ; i < poly.sen.size() ; i++, iter++)
   {
     if(i == poly.sen.size() - 1) outStream << *iter;
+    else if((*iter).getCoeff() < 0)
+    {
+      outStream << *iter;
+    }
     else outStream << *iter << "+";
   }
 
