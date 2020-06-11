@@ -6,6 +6,7 @@
   https://www.acmicpc.net/user/bconfiden2
   - steady    - 1일 1문제 / solved.ac 현재 등급
   - challenge - 1주 1문제 / solved.ac 다음 등급
+  - rest      - 바쁠 때 1일 1문제 / 쉬운 문제들 위주
 
 # cpp
   - algolab   - c++프로그래밍 알고랩 문제풀이
