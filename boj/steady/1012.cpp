@@ -4,21 +4,24 @@ using namespace std;
 
 bool map[50][50];
 
+// 돌면서 상하좌우 탐색
 void dfs(int row, int col)
 {
+    // 인덱스 에러 방지
     if(row < 0 || row >= 50) return;
     if(col < 0 || col >= 50) return;
-
+    
+    // 이미 검사했거나 땅이 아닐 경우 제외
     if(!map[row][col])
     {
         return;
     }
+    // 검사했다고 표시
     map[row][col] = false;
-
-    dfs(row - 1, col);
-    dfs(row + 1, col);
-    dfs(row, col - 1);
-    dfs(row, col + 1);
+    dfs(row + 1, col); // 상
+    dfs(row - 1, col); // 하
+    dfs(row, col - 1); // 좌
+    dfs(row, col + 1); // 우
 }
 
 int main(void)
@@ -40,7 +43,7 @@ int main(void)
             cin >> x >> y;
             map[y][x] = true;
         }
-
+        // 검사하지 않은 땅이 있으면 연결된 땅 모두 검사하는 dfs
         int number = 0;
         for(int row = 0 ; row < n ; row++)
         {
