@@ -12,13 +12,13 @@ int main(void)
     int n;
     cin >> n;
     unsigned int data = 0;
-    priority_queue<unsigned int> pq;
+    priority_queue<unsigned int> pq;       
     for(int i = 0 ; i < n ; i++)
     {
         cin >> data;
         if(data == 0)
         {
-            if(pq.empty())
+            if(pq.empty())                   
             {
                 cout << 0 << '\n';
                 continue;
