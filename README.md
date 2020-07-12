@@ -3,10 +3,9 @@
 
 # boj
   - 백준 문제풀이   :: https://www.acmicpc.net/user/bconfiden2
-  - steady    - 1일 1문제 / solved.ac 현재 등급
-  - challenge - 1주 1문제 / solved.ac 다음 등급
-  - rest      - 바쁠 때 1일 1문제 / 쉬운 문제들 위주
+  - 날짜별 정리 
+  - 1일 1문제 (+ 1주 1문제)
 
 # swea
   - 소프트웨어 익스퍼트 아카데미 문제풀이   :: bconfiden2
-  - 등급별 디렉토리
+  - 등급별 정리
