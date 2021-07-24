@@ -38,6 +38,8 @@ int main(void)
             if(r2[i] > answer) answer = r2[i];
         }
 
-        cout << answer << '\n';
+        if(n == 1) cout << (r1[0] > r2[0] ? r1[0] : r2[0]) << endl;
+        else if(n == 2) cout << (r1[1] > r2[1] ? r1[1] : r2[1]) << endl;
+        else cout << answer << '\n';
     }
 }
